@@ -1,0 +1,565 @@
+<div class="preloader">
+    <div class="loader">
+        <div class="loader__figure"></div>
+        <p class="loader__label">SMS....</p>
+    </div>
+</div>
+<!-- ============================================================== -->
+<!-- Main wrapper - style you can find in pages.scss -->
+<!-- ============================================================== -->
+<div id="main-wrapper">
+    <!-- ============================================================== -->
+    <!-- Topbar header - style you can find in pages.scss -->
+    <!-- ============================================================== -->
+    <app-topbar></app-topbar>
+    <!-- ============================================================== -->
+    <!-- End Topbar header -->
+    <!-- ============================================================== -->
+    <!-- ============================================================== -->
+    <!-- Left Sidebar - style you can find in sidebar.scss  -->
+    <!-- ============================================================== -->
+    <app-aside></app-aside>
+    <!-- ============================================================== -->
+    <!-- End Left Sidebar - style you can find in sidebar.scss  -->
+    <!-- ============================================================== -->
+    <!-- ============================================================== -->
+    <!-- Page wrapper  -->
+    <!-- ============================================================== -->
+    <div class="page-wrapper">
+        <!-- ============================================================== -->
+        <!-- Container fluid  -->
+        <!-- ============================================================== -->
+        <div class="container-fluid">
+            <!-- ============================================================== -->
+            <!-- Bread crumb and right sidebar toggle -->
+            <!-- ============================================================== -->
+            <div class="row page-titles">
+                <div class="col-md-5 align-self-center">
+                    <h3 class="text-themecolor"><i class="mdi mdi-account-multiple"></i> Mater List</h3>
+                </div>
+            </div>
+            <!-- ============================================================== -->
+            <!-- End Bread crumb and right sidebar toggle -->
+            <!-- ============================================================== -->
+            <!-- ============================================================== -->
+            <!-- Start Page Content -->
+            <!-- ============================================================== -->
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h4 class="card-title"><span class="lstick"></span>Mater List&nbsp;&nbsp;&nbsp;&nbsp;
+                                <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#filterForm">
+                                    <i class="fa fa-filter"></i> Filter
+                                </button>
+                                <button type="button" class="btn btn-primary btn-circle pull-right" data-toggle="modal" data-target="#myModal">
+                                    <i class="mdi mdi-account-multiple-plus"></i>
+                                </button>
+                            </h4>
+                        </div>
+                        <div class="card-body">
+                            <h6 class="card-subtitle">Students <code> Add or Update</code>
+                                <input type="search" (keyup)="searchBox($event.target.value)" aria-label="Search" class="pull-right form-control" style="max-width: 20%" placeholder="Search here">
+                            </h6>
+                            <div class="table-responsive">
+                                <table class="table table-striped font-14">
+                                    <thead>
+                                        <tr>
+                                            <th>#</th>
+                                            <th>Reg. No</th>
+                                            <th>Fulname</th>
+                                            <th>PhoneNo</th>
+                                            <th>Department</th>
+                                            <th>AcctNo</th>
+                                            <th>Bank Name</th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr *ngIf="MasterList.length<1">
+                                            <td colspan="8">Record not found</td>
+                                        </tr>
+                                        <tr *ngFor="let item of MasterList | paginate: config; let i=index">
+                                            <td>{{i+1}}</td>
+                                            <td>{{item.students.regno}}</td>
+                                            <td>{{item.students.fullname}}</td>
+                                            <td>{{item.students.phone}}</td>
+                                            <td>{{item.students.department}}</td>
+                                            <td>{{item.acctinfo.acctno}}</td>
+                                            <td>{{item.acctinfo.bankname}}</td>
+                                            <td>
+                                                <div class="btn-group" role="group">
+                                                    <button class="btn btn-xs btn-light" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                                    <i class="mdi mdi-dots-vertical"></i>
+                                                            </button>
+                                                    <div class="dropdown-menu">
+                                                        <a class="dropdown-item" (click)="addAcct(i)" data-toggle="modal" data-target="#updateAcct" href="#"><i class="mdi mdi-pencil-box"></i> Update Acct. Info</a>
+                                                        <a class="dropdown-item" (click)="addPlacement(i)" data-toggle="modal" data-target="#modalPlacement" href="#"><i class="mdi mdi-city"></i> Place of IT</a>
+                                                        <a class="dropdown-item" (click)="viewDetails(i)" data-toggle="modal" data-target="#detailInfo" href="#"><i class="mdi mdi-eye"></i> View</a>
+                                                    </div>
+                                                </div>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <div class="col-10">
+                                    <pagination-template class="row" *ngIf="MasterList.length && MasterList.length > 0" #p="paginationApi" [id]="config.id" (pageChange)="config.currentPage = $event">
+                                        <div class="col-md-3" *ngIf="p.pages.length>0">
+                                            Page {{p.getCurrent()}} of {{p.pages.length}}
+                                        </div>
+                                        <div class="col-md-5">
+                                            <ul class="pagination">
+                                                <li class="page-item" [class.disabled]="p.isFirstPage()">
+                                                    <a class="page-link" title="« Provious Page" *ngIf="!p.isFirstPage()" (click)="p.previous();$event.preventDefault();$event.stopPropagation()" href> « </a>
+                                                </li>
+                                                <li class="page-item" *ngFor="let page of p.pages" [class.current]="p.getCurrent() === page.value" [ngClass]="{'active': p.getCurrent() === page.value}">
+                                                    <a class="page-link" (click)="p.setCurrent(page.value);$event.preventDefault();$event.stopPropagation()" href>
+                                                                            {{ page.label }}
+                                                                        </a>
+                                                </li>
+                                                <li class="page-item" [class.disabled]="p.isLastPage()">
+                                                    <a class="page-link" title="Next Page »" *ngIf="!p.isLastPage()" (click)="p.next();$event.preventDefault();$event.stopPropagation()" href> » </a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </pagination-template>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- ============================================================== -->
+            <!-- End PAge Content -->
+            <!-- ============================================================== -->
+            <app-modal></app-modal>
+        </div>
+        <!-- ============================================================== -->
+        <!-- End Container fluid  -->
+        <!-- ============================================================== -->
+        <!-- ============================================================== -->
+        <!-- footer -->
+        <!-- ============================================================== -->
+        <app-footer></app-footer>
+        <!-- ============================================================== -->
+        <!-- End footer -->
+        <!-- ============================================================== -->
+    </div>
+    <!-- ============================================================== -->
+    <!-- End Page wrapper  -->
+    <!-- ============================================================== -->
+</div>
+<!-- ============================================================== -->
+<!-- End Wrapper -->
+<form class="form-horizontal" [formGroup]="studentForm" (ngSubmit)="AddStudent()">
+    <div class="modal fade right" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="false">
+        <div class="modal-dialog modal-full-height modal-right modal-notify modal-primary" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="heading lead">Add Student</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true" class="white-text">&times;</span>
+                                  </button>
+                </div>
+                <div class="modal-body mb-1">
+                    <div class="form-group">
+                        <div class="md-form was-validated">
+                            <input formControlName="regno" [ngClass]="{'invalid': isSubmitted && formControls.regno.errors}" type="text" class="form-control ml-0" required pattern="^FPB+\/([A-Z]{2})+\/([A-Z]{2,3})+\/ND/+([0-9]{2})+/([0-9]{3})$">
+                            <label for="regno" class="ml-4" style="margin-top:2.5rem!important;">Enter Reg. No</label>
+                            <div class="ml-0 text-danger" *ngIf="isSubmitted && formControls.regno.errors && formControls.regno.errors.required">Reg No. is required</div>
+                            <div class="ml-0 text-danger" *ngIf="isSubmitted && formControls.regno.errors && formControls.regno.errors.pattern">Reg No. is invalid</div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="md-form was-validated">
+                            <input formControlName="fullname" [ngClass]="{'invalid': isSubmitted && formControls.fullname.errors}" type="text" class="form-control ml-0" required pattern="[a-zA-Z ]*">
+                            <label for="form1" class="ml-4" style="margin-top:7.75rem!important;">Enter Fullname</label>
+                            <div class="ml-0 text-danger" *ngIf="isSubmitted && formControls.fullname.errors && formControls.fullname.errors.required">Fullname is required</div>
+                            <div class="ml-0 text-danger" *ngIf="isSubmitted && formControls.fullname.errors && formControls.fullname.errors.pattern">Fullname is invalid</div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="md-form was-validated">
+                            <input formControlName="phone" [ngClass]="{'invalid': isSubmitted && formControls.phone.errors}" type="text" class="form-control ml-0" required pattern="^(080|090|070|081)+[0-9]{8}$">
+                            <label for="form1" class="ml-4" style="margin-top:12.75rem!important;">Enter phone No</label>
+                            <div class="ml-0 text-danger" *ngIf="isSubmitted && formControls.phone.errors && formControls.phone.errors.required">Phone No is required</div>
+                            <div class="ml-0 text-danger" *ngIf="isSubmitted && formControls.phone.errors && formControls.phone.errors.pattern">Phone No is invalid</div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="md-form was-validated">
+                            <select formControlName="department" [ngClass]="{'invalid': isSubmitted && formControls.department.errors}" class="form-control form-control-line ml-0" required>
+                                                <option value="" selected>Choose Department</option>
+                                                <option>Accounting</option>
+                                                <option>Agric. Tech.</option>
+                                                <option>Computer Science</option>
+                                                <option>O.T.M</option>
+                                                <option>S.L.T</option>
+                                                <option>Statistics</option>
+                                            </select>
+                            <div class="ml-0 text-danger" *ngIf="isSubmitted && formControls.department.errors && formControls.department.errors.required">Department is required</div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="md-form was-validated">
+                            <input formControlName="photos" type="text" type="file" (change)="change($event)" [ngClass]="{'invalid': isSubmitted && (formControls.photos.errors || invalidfile)}" class="form-control ml-0" required>
+                            <div class="ml-0 text-danger" *ngIf="isSubmitted && formControls.photos.errors && formControls.photos.errors.required">Photograph is required</div>
+                            <div class="ml-0 text-danger" *ngIf="isSubmitted && invalidfile">Please choose a valid file.</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-info btn-sm" type="submit">
+                                    <i class="mdi mdi-content-save"></i>
+                                    Save
+                                </button>
+                    <button class="btn btn-light btn-sm" type="button" data-dismiss="modal">
+                                <i class="mdi mdi-close-circle"></i>
+                                Close
+                            </button>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+</form>
+
+
+<form class="form-horizontal" [formGroup]="acctForm" (ngSubmit)="updateAcct()">
+    <div class="modal fade right" id="updateAcct" tabindex="-1" role="dialog" aria-labelledby="updateAcctLabel" aria-hidden="true" data-backdrop="false">
+        <div class="modal-dialog modal-full-height modal-right modal-notify modal-warning" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="heading lead">Update Account Information</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true" class="white-text">&times;</span>
+                                      </button>
+                </div>
+                <div class="modal-body mb-1">
+                    <div class="form-group">
+                        <div class="md-form was-validated">
+                            <input *ngIf="singleItem && singleItem.students" formControlName="acctname" readonly [ngClass]="{'invalid': isAcctSubmited && acctControls.acctname.errors}" type="text" class="form-control ml-0">
+                            <label for="form1" class="ml-4" style="margin-top:2.5rem!important;">Account Name</label>
+                            <div class="ml-0 text-danger" *ngIf="isAcctSubmited && acctControls.acctname.errors && acctControls.acctname.errors.required">Acct. Name is required</div>
+                            <div class="ml-0 text-danger" *ngIf="isAcctSubmited && acctControls.acctname.errors && acctControls.acctname.errors.pattern">Acct. Name is invalid</div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="md-form was-validated">
+                            <input formControlName="acctno" [ngClass]="{'invalid': isAcctSubmited && acctControls.acctno.errors}" type="text" class="form-control ml-0" required pattern="^[0-9]{10}$">
+                            <label for="form1" class="ml-4" style="margin-top:7.75rem!important;">Account No.</label>
+                            <div class="ml-0 text-danger" *ngIf="isAcctSubmited && acctControls.acctno.errors && acctControls.acctno.errors.required">Acct. No is required</div>
+                            <div class="ml-0 text-danger" *ngIf="isAcctSubmited && acctControls.acctno.errors && acctControls.acctno.errors.pattern">Acct. No is invalid</div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="md-form was-validated">
+                            <select formControlName="bankname" id="bankname" [ngClass]="{'invalid': isAcctSubmited && acctControls.bankname.errors}" class="form-control form-control-line ml-0" required>
+                               <option value="" selected>Choose Bank</option>
+                               <option>Access Bank</option>
+                               <option>GTBank</option>
+                               <option>Union Bank</option>
+                               <option>UBA</option>
+                               <option>FCMB</option>
+                               <option>Sky Bank</option>
+                               <option>Sterling Bank</option>
+                               <option>Heritage Bank</option>
+                               <option>First Bank</option>
+                               <option>Eco Bank</option>
+                               <option>Jaz Bank</option>
+                            </select>
+                            <div class="ml-0 text-danger" *ngIf="isAcctSubmited && acctControls.bankname.errors && acctControls.bankname.errors.required">Bank Name is required</div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="md-form was-validated">
+                            <input formControlName="sortcode" [ngClass]="{'invalid': isAcctSubmited && acctControls.sortcode.errors}" type="text" class="form-control ml-0" required pattern="^[0-9]{6,15}$">
+                            <label for="form1" class="ml-4" style="margin-top:18.5rem!important;">Sort Code.</label>
+                            <div class="ml-0 text-danger" *ngIf="isAcctSubmited && acctControls.sortcode.errors && acctControls.sortcode.errors.required">Sort Code is required</div>
+                            <div class="ml-0 text-danger" *ngIf="isAcctSubmited && acctControls.sortcode.errors && acctControls.sortcode.errors.pattern">Sort Code is invalid</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-warning btn-sm" type="submit">
+                                        <i class="mdi mdi-content-save"></i>
+                                        Save
+                                    </button>
+                    <button class="btn btn-light btn-sm" id="closeAcct" type="button" data-dismiss="modal">
+                                    <i class="mdi mdi-close-circle"></i>
+                                    Close
+                                </button>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+</form>
+<!-- Side Modal Top Left Info-->
+<div class="modal fade left" *ngIf="singleItem && singleItem.students" id="detailInfo" tabindex="-1" role="dialog" aria-labelledby="detailInfoLabel" aria-hidden="true" data-backdrop="false">
+    <div class="modal-dialog modal-full-height modal-left modal-notify modal-info" role="document">
+        <!--Content-->
+        <div class="modal-content">
+            <!--Header-->
+            <div class="modal-header">
+                <p class="heading lead">{{singleItem.students.fullname}} Details</p>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true" class="white-text">&times;</span></button>
+            </div>
+
+            <!--Body-->
+            <div class="modal-body" style="max-height:100%; overflow-y: auto">
+
+                <img [src]="singleItem.photos" [alt]="singleItem.students.fullname" class="img-fluid">
+
+                <div class="text-left">
+                    <h3 *ngIf="singleItem.students">Personal Information</h3>
+                    <table *ngIf="singleItem.students" class="table table-sm">
+                        <tr>
+                            <td>Reg. No: </td>
+                            <td>{{singleItem.students.regno}}</td>
+                        </tr>
+                        <tr>
+                            <td>Fullname: </td>
+                            <td>{{singleItem.students.fullname}}</td>
+                        </tr>
+                        <tr>
+                            <td>Phone No: </td>
+                            <td>{{singleItem.students.phone}}</td>
+                        </tr>
+                        <tr>
+                            <td>Department: </td>
+                            <td>{{singleItem.students.department}}</td>
+                        </tr>
+                    </table>
+                    <h3 *ngIf="singleItem.acctinfo && singleItem.acctinfo.acctno">Account Information</h3>
+                    <table *ngIf="singleItem.acctinfo && singleItem.acctinfo.acctno" class="table table-sm">
+                        <tr>
+                            <td>AcctNo: </td>
+                            <td>{{singleItem.acctinfo.acctno}}</td>
+                        </tr>
+                        <tr>
+                            <td>Bank: </td>
+                            <td>{{singleItem.acctinfo.bankname}}</td>
+                        </tr>
+                        <tr>
+                            <td>Sort Code: </td>
+                            <td>{{singleItem.acctinfo.sortcode}}</td>
+                        </tr>
+                    </table>
+                    <h3 *ngIf="singleItem.placement && singleItem.placement.orgname">Place of IT Information</h3>
+                    <table *ngIf="singleItem.placement && singleItem.placement.orgname" class="table table-sm">
+                        <tr>
+                            <td>Organisation: </td>
+                            <td>{{singleItem.placement.orgname}}</td>
+                        </tr>
+                        <tr>
+                            <td>State: {{singleItem.placement.state}}</td>
+                            <td>LGA {{singleItem.placement.lga}}</td>
+                        </tr>
+                        <tr>
+                            <td>City: </td>
+                            <td>{{singleItem.placement.city}}</td>
+                        </tr>
+                        <tr>
+                            <td>Address: </td>
+                            <td>{{singleItem.placement.addr}}</td>
+                        </tr>
+                        <tr>
+                            <td>Phone: </td>
+                            <td>{{singleItem.placement.phone}}</td>
+                        </tr>
+                        <tr>
+                            <td>Email: </td>
+                            <td>{{singleItem.placement.email}}</td>
+                        </tr>
+                    </table>
+                    <h3 *ngIf="singleItem.supervisor && singleItem.supervisor.fullname">Suppervisor Information</h3>
+                    <table *ngIf="singleItem.supervisor && singleItem.supervisor.fullname" class="table table-sm">
+                        <tr>
+                            <td>Fullname: </td>
+                            <td>{{singleItem.supervisor.fullname}}</td>
+                        </tr>
+                        <tr>
+                            <td>Phone: </td>
+                            <td>{{singleItem.supervisor.phone}}</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+
+            <!--Footer-->
+            <div class="modal-footer justify-content-center">
+                <a role="button" class="btn btn-outline-info waves-effect" data-dismiss="modal">Close</a>
+            </div>
+        </div>
+        <!--/.Content-->
+    </div>
+</div>
+<!-- Side Modal Top Left Info-->
+<form class="form-horizontal form-material" [formGroup]="placementForm" (ngSubmit)="updatePlacement()">
+    <!-- Frame Modal Bottom Success-->
+    <div class="modal fade bottom" id="modalPlacement" tabindex="-1" role="dialog" aria-labelledby="modalPlacementLabel" aria-hidden="true" data-backdrop="false">
+        <div class="modal-dialog modal-frame modal-bottom modal-notify modal-success" role="document">
+            <!--Content-->
+            <div class="modal-content">
+                <!--Body-->
+                <div class="modal-body">
+                    <div class="row d-flex justify-content-center align-items-center was-validated">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label class="col-md-12">Organization</label>
+                                <div class="col-md-12">
+                                    <input formControlName="org" type="text" placeholder="IT Inc." class="form-control form-control-line" required>
+                                    <div class="ml-0 text-danger" *ngIf="isPlacementSubmitted && placementControls.org.errors && placementControls.org.errors.required">Organization is required.</div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-12">Select State</label>
+                                <div class="col-sm-12">
+                                    <select formControlName="state" (change)="onStateSelectChange($event.target.value)" class="form-control form-control-line" required>
+                                            <option value="Abia">Abia</option>
+                                            <option value="Adamawa">Adamawa</option>
+                                            <option value="Akwa Ibom">Akwa Ibom</option>
+                                            <option value="Anambra">Anambra</option>
+                                            <option value="Bauchi">Bauchi</option>
+                                            <option value="Bayelsa">Bayelsa</option>
+                                            <option value="Benue">Benue</option>
+                                            <option value="Borno">Borno</option>
+                                            <option value="Cross River">Cross River</option>
+                                            <option value="Delta">Delta</option>
+                                            <option value="Ebonyi">Ebonyi</option>
+                                            <option value="Edo">Edo</option>
+                                            <option value="Ekiti">Ekiti</option>
+                                            <option value="Enugu"> Enugu</option>
+                                            <option value="Gombe"> Gombe</option>
+                                            <option value="Imo"> Imo</option>
+                                            <option value="Jigawa"> Jigawa</option>
+                                            <option value="Kaduna"> Kaduna</option>
+                                            <option value="Kano"> Kano</option>
+                                            <option value="Katsina"> Katsina</option>
+                                            <option value="Kebbi"> Kebbi</option>
+                                            <option value="Kogi"> Kogi</option>
+                                            <option value="Kwara"> Kwara</option>
+                                            <option value="Lagos"> Lagos</option>
+                                            <option value="Nasarawa"> Nasarawa</option>
+                                            <option value="Niger"> Niger</option>
+                                            <option value="Ogun"> Ogun</option>
+                                            <option value="Ondo"> Ondo</option>
+                                            <option value="Osun"> Osun</option>
+                                            <option value="Oyo"> Oyo</option>
+                                            <option value="Plateau"> Plateau</option>
+                                            <option value="Rivers"> Rivers</option>
+                                            <option value="Sokoto"> Sokoto</option>
+                                            <option value="Taraba"> Taraba</option>
+                                            <option value="Yobe"> Yobe</option>
+                                            <option value="Zamfara"> Zamfara</option>
+                                            <option value="FCT">FCT</option>
+                                            </select>
+                                    <div class="ml-0 text-danger" *ngIf="isPlacementSubmitted && placementControls.state.errors && placementControls.state.errors.required">State is required.</div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-12">Select L.G.A</label>
+                                <div class="col-sm-12">
+                                    <select formControlName="lga" class="form-control form-control-line" required>
+                                                    <option *ngFor="let item of lgalist" [value]="item" [text]="item"></option>
+                                                </select>
+                                    <div class="ml-0 text-danger" *ngIf="isPlacementSubmitted && placementControls.lga.errors && placementControls.lga.errors.required">L.G.A is required.</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label class="col-md-12">City</label>
+                                <div class="col-md-12">
+                                    <input formControlName="city" type="text" placeholder="Bali" class="form-control form-control-line" required pattern="^[a-zA-Z\.\-\ ]{2,20}$">
+                                    <div class="ml-0 text-danger" *ngIf="isPlacementSubmitted && placementControls.city.errors && placementControls.city.errors.required">City is required.</div>
+                                    <div class="ml-0 text-danger" *ngIf="isPlacementSubmitted && placementControls.city.errors && placementControls.city.errors.pattern">Please provide a valid City</div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-12">Address</label>
+                                <div class="col-md-12">
+                                    <input formControlName="addr" type="text" placeholder="Yahuza street, Ayoko city" class="form-control form-control-line" required>
+                                    <div class="ml-0 text-danger" *ngIf="isPlacementSubmitted && placementControls.addr.errors && placementControls.addr.errors.required">Address is required.</div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-12">Phone No</label>
+                                <div class="col-md-12">
+                                    <input formControlName="phone" type="text" placeholder="07018272332" class="form-control form-control-line" required pattern="^(080|090|070|081)+[0-9]{8}$">
+                                    <div class="ml-0 text-danger" *ngIf="isPlacementSubmitted && placementControls.phone.errors && placementControls.phone.errors.required">Phone No is required.</div>
+                                    <div class="ml-0 text-danger" *ngIf="isPlacementSubmitted && placementControls.phone.errors && placementControls.phone.errors.pattern">Please provide a valid Phone No.</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4" style="vertical-align: top">
+                            <div class="form-group" [ngClass]="{'has-error': isPlacementSubmitted && placementControls.email.errors}">
+                                <label class="col-md-12">Email</label>
+                                <div class="col-md-12">
+                                    <input formControlName="email" type="text" placeholder="email@email.com" class="form-control form-control-line" required pattern="^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$">
+                                    <div class="ml-0 text-danger" *ngIf="isPlacementSubmitted && placementControls.email.errors && placementControls.email.errors.required">Email is required.</div>
+                                    <div class="ml-0 text-danger" *ngIf="isPlacementSubmitted && placementControls.email.errors && placementControls.email.errors.pattern">Please provide a valid Email.</div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <button class="btn btn-primary btn-sm" type="submit">
+                                                    <i class="mdi mdi-content-save"></i>
+                                                    Save
+                                                </button>
+                                <button class="btn btn-light btn-sm pull-right" id="closePlace" type="reset" data-dismiss="modal">
+                                                <i class="mdi mdi-close-circle"></i>
+                                                Close
+                                            </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--/.Content-->
+        </div>
+    </div>
+    <!-- Frame Modal Bottom Success-->
+</form>
+<div class="modal fade top" id="filterForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="false">
+    <div class="modal-dialog modal-frame modal-top modal-notify modal-danger" role="document">
+        <!--Content-->
+        <div class="modal-content">
+            <!--Body-->
+            <div class="modal-body">
+                <div class="row d-flex justify-content-center align-items-center">
+                    <form class="form-inline form-material" [formGroup]="filterForm" (ngSubmit)="filterRecords()">
+                        <div class="form-group">
+                            <label for="session">Session</label>
+                            <select formControlName="session" class="form-control ml-1">
+                                        <option>All</option>
+                                        <option>2018/2019</option>
+                                      </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="dpm">Department</label>
+                            <select formControlName="dpm" class="form-control ml-1">
+                                            <option>All</option>
+                                            <option>Accounting</option>
+                                            <option>Agric. Tech.</option>
+                                            <option>Computer Science</option>
+                                            <option>O.T.M</option>
+                                            <option>S.L.T</option>
+                                            <option>Statistics</option>
+                                          </select>
+                        </div>
+                        <div class="form-group">
+                            <button class="btn btn-sm btn-primary" type="submit"> <i class="fa fa-filter"></i> Filter</button>
+                            <button class="btn btn-sm btn-danger" type="button" data-dismiss="modal"><i class="mdi mdi-close"></i> Close</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--/.Content-->
+</div>

@@ -1,0 +1,48 @@
+<button type="button" class="btn btn-primary btn-sm" [hidden]="true" id="showSuccess" data-toggle="modal" data-target="#msgSuccess" data-backdrop="false">msgSuccess</button>
+<div class="modal fade top" id="msgSuccess" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="false">
+    <div class="modal-dialog modal-frame modal-top modal-notify modal-success" role="document">
+        <!--Content-->
+        <div class="modal-content">
+            <!--Body-->
+            <div class="modal-body">
+                <div class="row d-flex justify-content-center align-items-center">
+                    <p class="pt-3 pr-2" [innerHTML]="message"></p>
+                    <button type="button" id="hideSuccess" class="btn btn-outline-success waves-effect pull-right" data-dismiss="modal"><i class="mdi mdi-check"></i> Ok</button>
+                </div>
+            </div>
+        </div>
+        <!--/.Content-->
+    </div>
+</div>
+<button type="button" class="btn btn-primary btn-sm" [hidden]="true" id="showError" data-toggle="modal" data-target="#msgError" data-backdrop="false">msgError</button>
+<div class="modal fade top" id="msgError" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="false">
+    <div class="modal-dialog modal-frame modal-top modal-notify modal-danger" role="document">
+        <!--Content-->
+        <div class="modal-content">
+            <!--Body-->
+            <div class="modal-body">
+                <div class="row d-flex justify-content-center align-items-center">
+                    <p class="pt-3 pr-2" [innerHTML]="message"></p>
+                    <button type="button" id="hideError" class="btn btn-outline-danger waves-effect pull-right" data-dismiss="modal"><i class="mdi mdi-check"></i> Ok</button>
+                </div>
+            </div>
+        </div>
+        <!--/.Content-->
+    </div>
+</div>
+<div class="modal fade top" id="msgConfim" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="false">
+    <div class="modal-dialog modal-frame modal-top modal-notify modal-danger" role="document">
+        <!--Content-->
+        <div class="modal-content">
+            <!--Body-->
+            <div class="modal-body">
+                <div class="row d-flex justify-content-center align-items-center">
+                    <p class="pt-3 pr-2" [innerHTML]="message"></p>
+                    <a role="button" class="btn btn-outline-danger waves-effect" data-dismiss="modal"><i class="mdi mdi-check"></i> Yes</a>
+                    <a role="button" class="btn btn-outline-danger waves-effect" data-dismiss="modal"><i class="mdi mdi-close"></i> No</a>
+                </div>
+            </div>
+        </div>
+        <!--/.Content-->
+    </div>
+</div>

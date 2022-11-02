@@ -1,0 +1,353 @@
+<div class="preloader">
+    <div class="loader">
+        <div class="loader__figure"></div>
+        <p class="loader__label">SMS....</p>
+    </div>
+</div>
+<!-- ============================================================== -->
+<!-- Main wrapper - style you can find in pages.scss -->
+<!-- ============================================================== -->
+<div id="main-wrapper">
+    <!-- ============================================================== -->
+    <!-- Topbar header - style you can find in pages.scss -->
+    <!-- ============================================================== -->
+    <app-topbar></app-topbar>
+    <!-- ============================================================== -->
+    <!-- End Topbar header -->
+    <!-- ============================================================== -->
+    <!-- ============================================================== -->
+    <!-- Left Sidebar - style you can find in sidebar.scss  -->
+    <!-- ============================================================== -->
+    <app-aside></app-aside>
+    <!-- ============================================================== -->
+    <!-- End Left Sidebar - style you can find in sidebar.scss  -->
+    <!-- ============================================================== -->
+    <!-- ============================================================== -->
+    <!-- Page wrapper  -->
+    <!-- ============================================================== -->
+    <div class="page-wrapper">
+        <!-- ============================================================== -->
+        <!-- Container fluid  -->
+        <!-- ============================================================== -->
+        <div class="container-fluid">
+            <!-- ============================================================== -->
+            <!-- Bread crumb and right sidebar toggle -->
+            <!-- ============================================================== -->
+            <div class="row page-titles">
+                <div class="col-md-5 align-self-center">
+                    <h3 class="text-themecolor"><i class="mdi mdi-routes"></i> Routes</h3>
+                </div>
+            </div>
+            <!-- ============================================================== -->
+            <!-- End Bread crumb and right sidebar toggle -->
+            <!-- ============================================================== -->
+            <!-- ============================================================== -->
+            <!-- Start Page Content -->
+            <!-- ============================================================== -->
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h4 class="card-title"><span class="lstick"></span>Routes
+                                <button type="button" class="btn btn-info btn-circle pull-right" data-toggle="modal" data-target="#modalRoutes">
+                                                    <i class="mdi mdi-plus-circle"></i>
+                                                </button>
+                            </h4>
+                        </div>
+                        <div class="card-body">
+                            <h6 class="card-subtitle">
+                                Routes <code> Update</code> &nbsp;&nbsp;&nbsp;&nbsp;
+                                <div class="btn-group" role="group" aria-label="Buttons">
+                                    <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#filterForm">
+                                                <i class="fa fa-filter"></i> Filter
+                                            </button>
+                                    <button type="button" class="btn btn-sm btn-dark">
+                                                    <i class="fa fa-print"></i> Print
+                                                </button>
+                                </div>
+
+                                <input type="search" (keyup)="searchBox($event.target.value)" aria-label="Search" class="pull-right form-control" style="max-width: 20%" placeholder="Search here">
+                            </h6>
+                            <div class="table-responsive">
+                                <table class="table table-striped font-14">
+                                    <thead>
+                                        <tr>
+                                            <th>#</th>
+                                            <th>File No</th>
+                                            <th>Name</th>
+                                            <th>Phone No</th>
+                                            <th>Department</th>
+                                            <th>Routes</th>
+                                            <th>No. of Students</th>
+                                            <th>&nbsp;</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr *ngIf="routes_list.length<1">
+                                            <td colspan="8">Record not found</td>
+                                        </tr>
+                                        <tr *ngFor="let item of routes_list | paginate: config; let i=index">
+                                            <td>{{i+1}}</td>
+                                            <td>{{item.supervisor.fileno}}</td>
+                                            <td>{{item.supervisor.fullname}}</td>
+                                            <td>{{item.supervisor.phone}}</td>
+                                            <td>{{item.supervisor.department}}</td>
+                                            <td>{{item.routes.city}}</td>
+                                            <td>{{item.routes.count}}</td>
+                                            <td>
+                                                <div class="btn-group" role="group">
+                                                    <button class="btn btn-xs btn-light" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                                        <i class="mdi mdi-dots-vertical"></i>
+                                                                </button>
+                                                    <div class="dropdown-menu">
+                                                        <a class="dropdown-item" (click)="viewDetails(i)" data-toggle="modal" data-target="#showSupStudent" href="#"><i class="mdi mdi-eye"></i> View</a>
+                                                    </div>
+                                                </div>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <div class="col-md-10">
+                                    <pagination-template class="row" *ngIf="routes_list.length && routes_list.length > 0" #p="paginationApi" [id]="config.id" (pageChange)="config.currentPage = $event">
+                                        <div class="col-md-3" *ngIf="p.pages.length>0">
+                                            Page {{p.getCurrent()}} of {{p.pages.length}}
+                                        </div>
+                                        <div class="col-md-5">
+                                            <ul class="pagination">
+                                                <li class="page-item" [class.disabled]="p.isFirstPage()">
+                                                    <a class="page-link" title="« Provious Page" *ngIf="!p.isFirstPage()" (click)="p.previous();$event.preventDefault();$event.stopPropagation()" href> « </a>
+                                                </li>
+                                                <li class="page-item" *ngFor="let page of p.pages" [class.current]="p.getCurrent() === page.value" [ngClass]="{'active': p.getCurrent() === page.value}">
+                                                    <a class="page-link" (click)="p.setCurrent(page.value);$event.preventDefault();$event.stopPropagation()" href>
+                                                                                {{ page.label }}
+                                                                            </a>
+                                                </li>
+                                                <li class="page-item" [class.disabled]="p.isLastPage()">
+                                                    <a class="page-link" title="Next Page »" *ngIf="!p.isLastPage()" (click)="p.next();$event.preventDefault();$event.stopPropagation()" href> » </a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </pagination-template>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- ============================================================== -->
+            <!-- End PAge Content -->
+            <!-- ============================================================== -->
+            <app-modal></app-modal>
+        </div>
+        <!-- ============================================================== -->
+        <!-- End Container fluid  -->
+        <!-- ============================================================== -->
+        <!-- ============================================================== -->
+        <!-- footer -->
+        <!-- ============================================================== -->
+        <app-footer></app-footer>
+        <!-- ============================================================== -->
+        <!-- End footer -->
+        <!-- ============================================================== -->
+    </div>
+    <!-- ============================================================== -->
+    <!-- End Page wrapper  -->
+    <!-- ============================================================== -->
+</div>
+<!-- ============================================================== -->
+<!-- End Wrapper -->
+<form class="form-horizontal form-material" [formGroup]="routesForm" id="routesid" (ngSubmit)="submit()">
+    <!-- Frame Modal Bottom Success-->
+    <div class="modal fade bottom" id="modalRoutes" tabindex="-1" role="dialog" aria-labelledby="modalRoutesLabel" aria-hidden="true" data-backdrop="false">
+        <div class="modal-dialog modal-frame modal-full-height modal-bottom modal-notify modal-success" role="document">
+            <!--Content-->
+            <div class="modal-content">
+                <!--Body-->
+                <div class="modal-body">
+                    <div class="row d-flex was-validated">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label class="col-sm-12">Select Department</label>
+                                <div class="col-sm-12">
+                                    <select formControlName="dpm" (change)="selectDepartment($event.target.value)" class="form-control form-control-line" required>
+                                                <option value="" selected>Choose....</option>
+                                                <option>Accounting</option>
+                                                <option>Agric. Tech.</option>
+                                                <option>Computer Science</option>
+                                                <option>O.T.M</option>
+                                                <option>S.L.T</option>
+                                                <option>Statistics</option>
+                                                </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-12">Select Supervisor</label>
+                                <div class="col-sm-12">
+                                    <select formControlName="supid" class="form-control form-control-line" required>
+                                                    <option value="" selected>Choose....</option>
+                                                    <option *ngFor="let item of supervisors" [value]="item.id" text="{{item.fileno}}, {{item.fullname}}"></option>
+                                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-12">Select Locations</label>
+                                <div class="col-sm-12">
+                                    <select formControlName="state" (change)="selectLocation($event.target.value)" class="form-control form-control-line" required>
+                                            <option value="" selected>Choose....</option>
+                                                        <option *ngFor="let item of placement" [value]="item" [text]="item"></option>
+                                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4" style="max-height:250px; overflow-y: auto">
+                            <table class="table table-responsive">
+                                <tr *ngFor="let item of cities; let i=index">
+                                    <td>{{i+1}}</td>
+                                    <td style="white-space: nowrap">{{item.city}}
+                                        <input id="city{{i}}" [value]="item.city" type="text" [hidden]="true" class="form-control">
+                                    </td>
+                                    <td>{{item.count}}</td>
+                                    <td class="md-form">
+                                        <input id="no{{i}}" (keyup)="numbers($event.target.value,i)" type="number" class="form-control">
+                                    </td>
+                                    <td>
+                                        <button type="button" (click)="choiceAll(i)" class="btn btn-xs btn-success">All</button>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div class="col-md-4" style="vertical-align: top">
+
+                            <div class="form-group">
+                                <button class="btn btn-primary btn-sm" type="submit">
+                                                        <i class="mdi mdi-content-save"></i>
+                                                        Save
+                                                    </button>
+                                <button (click)="reset()" class="btn btn-light btn-sm pull-right" type="reset" data-dismiss="modal">
+                                                    <i class="mdi mdi-close-circle"></i>
+                                                    Close
+                                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--/.Content-->
+        </div>
+    </div>
+    <!-- Frame Modal Bottom Success-->
+</form>
+
+<div class="modal fade top" id="filterForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="false">
+    <div class="modal-dialog modal-frame modal-top modal-notify modal-danger" role="document">
+        <!--Content-->
+        <div class="modal-content">
+            <!--Body-->
+            <div class="modal-body">
+                <div class="row d-flex justify-content-center align-items-center">
+                    <form class="form-inline form-material" [formGroup]="filterForm" (ngSubmit)="filterRecords()">
+                        <div class="form-group">
+                            <label for="session">Session</label>
+                            <select formControlName="session" class="form-control ml-1">
+                                            <option>All</option>
+                                            <option>2018/2019</option>
+                                          </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="dpm">Department</label>
+                            <select formControlName="dpm" class="form-control ml-1">
+                                                <option>All</option>
+                                                <option>Accounting</option>
+                                                <option>Agric. Tech.</option>
+                                                <option>Computer Science</option>
+                                                <option>O.T.M</option>
+                                                <option>S.L.T</option>
+                                                <option>Statistics</option>
+                                              </select>
+                        </div>
+                        <div class="form-group">
+                            <button class="btn btn-sm btn-primary" type="submit"> <i class="fa fa-filter"></i> Filter</button>
+                            <button class="btn btn-sm btn-danger" type="button" data-dismiss="modal"><i class="mdi mdi-close"></i> Close</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--/.Content-->
+</div>
+
+<!-- Central Modal Fluid Success-->
+<div class="modal fade" id="showSupStudent" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-full-height modal-fluid modal-notify" style="width: 100%" role="document">
+        <!--Content-->
+        <div class="modal-content">
+            <!--Header-->
+            <div class="modal-header">
+                <p class="heading text-dark">Supervision List for <small id="supname">{{supname | uppercase}}</small></p>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true" class="text-danger">&times;</span></button>
+            </div>
+
+            <!--Body-->
+            <div class="modal-body">
+                <div class="text-center">
+                    <div *ngIf="!substudents || !substudents.length" class="row d-flex justify-content-center align-items-center" style="min-height:500px;max-height:500px;overflow-y: auto">
+                        <img width="100" height="100" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA=="
+                        />
+                    </div>
+                    <div id="printContent" *ngIf="substudents && substudents.length" class="table-responsive text-left" style="min-height:500px;max-height:500px;overflow-y: auto">
+                        <div id="title" [hidden]="true">
+                            <div class="text-center w-100">
+                                <h2>FEDERAL POLYTECHNIC, BALI<br> DEPARTMENT OF {{ supdpm | uppercase }}</h2>
+                                <h3>{{supname | uppercase}} SUPERVISION LIST</h3>
+                            </div>
+                        </div>
+                        <table class="table table-striped font-14">
+                            <thead>
+                                <tr class="bg-light-info">
+                                    <th></th>
+                                    <th colspan="3">Student Information</th>
+                                    <th colspan="4">Place of IT</th>
+                                </tr>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Reg No</th>
+                                    <th>Name</th>
+                                    <th>Phone No</th>
+                                    <th>Name</th>
+                                    <th>Address</th>
+                                    <th>Phone</th>
+                                    <th>Email</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngIf="substudents.length<1">
+                                    <td colspan="8">Record not found</td>
+                                </tr>
+                                <tr *ngFor="let item of substudents; let i=index">
+                                    <td>{{i+1}}</td>
+                                    <td>{{item.regno}}</td>
+                                    <td>{{item.fullname}}</td>
+                                    <td>{{item.phone}}</td>
+                                    <td>{{item.orgname}}</td>
+                                    <td>{{item.addr}}</td>
+                                    <td>{{item.orgphone}}</td>
+                                    <td>{{item.email}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!--Footer-->
+                <div class="modal-footer">
+                    <button type="button" id="print" class="btn btn-success">Print <i class="fa fa-print ml-1"></i></button>
+                    <button type="button" class="btn btn-outline-success waves-effect" data-dismiss="modal"> <i class="fa fa-close"></i> Close</button>
+                </div>
+            </div>
+            <!--/.Content-->
+        </div>
+    </div>
+    <!-- Central Modal Fluid Success-->

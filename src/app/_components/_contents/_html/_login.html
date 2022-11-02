@@ -1,0 +1,54 @@
+<div class="preloader">
+    <div class="loader">
+        <div class="loader__figure"></div>
+        <p class="loader__label">SMS....</p>
+    </div>
+</div>
+<!-- ============================================================== -->
+<!-- Main wrapper - style you can find in pages.scss -->
+<!-- ============================================================== -->
+<div id="main-wrapper">
+    <div class="row justify-content-center m-t-40">
+        <div class="card p-4 bg-theme m-t-30">
+            <div class="card-body">
+                <form [formGroup]="loginForm" (ngSubmit)="login()">
+                    <h1 class="white-text">Login</h1>
+                    <p class="white-text">Sign In to SIWES MIS</p>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">
+                                                                <i class="mdi mdi-account white-text mr-1"></i>
+                                                              </span>
+                        </div>
+                        <input class="form-control" type="text" placeholder="Username" formControlName="username" required>
+                    </div>
+                    <div class="input-group mb-4">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">
+                                                                <i class="mdi mdi-account-key white-text mr-1"></i>
+                                                              </span>
+                        </div>
+                        <input class="form-control" type="password" placeholder="Password" formControlName="password" required>
+                    </div>
+                    <div class="alert alert-danger" *ngIf="isMessage && errMsg.status != 1701" [innerHTML]="errMsg.msg"></div>
+                    <div class="row">
+                        <div class="col-6">
+                            <button class="btn btn-primary px-4" type="submit">Login</button>
+                        </div>
+                        <div class="col-6 text-right">
+                            <button class="btn btn-link px-0 d-md-down-none" type="submit">Forgot password?</button>
+                            <!-- <a class="btn btn-link px-0 d-md-up-none" routerLink="/register">Register</a> -->
+                        </div>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+
+    </div>
+    <!-- ============================================================== -->
+    <!-- End Page wrapper  -->
+    <!-- ============================================================== -->
+</div>
+<!-- ============================================================== -->
+<!-- End Wrapper -->

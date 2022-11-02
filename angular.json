@@ -1,0 +1,147 @@
+{
+    "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
+    "cli": {
+      "analytics": "83cc3207-4f92-4cc9-86ec-f7c69531a8e4"
+    },
+    "version": 1,
+    "newProjectRoot": "projects",
+    "projects": {
+        "siwes": {
+            "root": "",
+            "sourceRoot": "src",
+            "projectType": "application",
+            "prefix": "app",
+            "schematics": {},
+            "architect": {
+                "build": {
+                    "builder": "@angular-devkit/build-angular:browser",
+                    "options": {
+                        "outputPath": "dist/siwes",
+                        "index": "src/index.html",
+                        "main": "src/main.ts",
+                        "polyfills": "src/polyfills.ts",
+                        "tsConfig": "src/tsconfig.app.json",
+                        "assets": [
+                            "src/assets/images/favicon.png",
+                            "src/assets"
+                        ],
+                        "styles": [
+                            "src/assets/plugins/bootstrap/css/bootstrap.min.css",
+                            "src/assets/css/colors/default-dark.css",
+                            "src/assets/css/style.css"
+                        ],
+                        "scripts": [
+                            "src/assets/plugins/jquery/jquery.min.js",
+                            "src/assets/plugins/bootstrap/js/popper.min.js",
+                            "src/assets/plugins/bootstrap/js/bootstrap.min.js",
+                            "src/assets/js/perfect-scrollbar.jquery.min.js",
+                            "node_modules/imagesloaded/imagesloaded.pkgd.min.js",
+                            "node_modules/masonry-layout/dist/masonry.pkgd.min.js",
+                            "src/assets/js/jQuery.print.js",
+                            "src/assets/js/waves.js",
+                            "src/assets/js/sidebarmenu.js",
+                            "src/assets/js/custom.min.js"
+                        ]
+                    },
+                    "configurations": {
+                        "production": {
+                            "fileReplacements": [{
+                                "replace": "src/environments/environment.ts",
+                                "with": "src/environments/environment.prod.ts"
+                            }],
+                            "optimization": true,
+                            "outputHashing": "all",
+                            "sourceMap": false,
+                            "extractCss": true,
+                            "namedChunks": false,
+                            "aot": true,
+                            "extractLicenses": true,
+                            "vendorChunk": false,
+                            "buildOptimizer": true,
+                            "budgets": [{
+                                "type": "initial",
+                                "maximumWarning": "2mb",
+                                "maximumError": "5mb"
+                            }]
+                        }
+                    }
+                },
+                "serve": {
+                    "builder": "@angular-devkit/build-angular:dev-server",
+                    "options": {
+                        "browserTarget": "siwes:build"
+                    },
+                    "configurations": {
+                        "production": {
+                            "browserTarget": "siwes:build:production"
+                        }
+                    }
+                },
+                "extract-i18n": {
+                    "builder": "@angular-devkit/build-angular:extract-i18n",
+                    "options": {
+                        "browserTarget": "siwes:build"
+                    }
+                },
+                "test": {
+                    "builder": "@angular-devkit/build-angular:karma",
+                    "options": {
+                        "main": "src/test.ts",
+                        "polyfills": "src/polyfills.ts",
+                        "tsConfig": "src/tsconfig.spec.json",
+                        "karmaConfig": "src/karma.conf.js",
+                        "styles": [
+                            "src/styles.css"
+                        ],
+                        "scripts": [],
+                        "assets": [
+                            "src/favicon.ico",
+                            "src/assets"
+                        ]
+                    }
+                },
+                "lint": {
+                    "builder": "@angular-devkit/build-angular:tslint",
+                    "options": {
+                        "tsConfig": [
+                            "src/tsconfig.app.json",
+                            "src/tsconfig.spec.json"
+                        ],
+                        "exclude": [
+                            "**/node_modules/**"
+                        ]
+                    }
+                }
+            }
+        },
+        "siwes-e2e": {
+            "root": "e2e/",
+            "projectType": "application",
+            "prefix": "",
+            "architect": {
+                "e2e": {
+                    "builder": "@angular-devkit/build-angular:protractor",
+                    "options": {
+                        "protractorConfig": "e2e/protractor.conf.js",
+                        "devServerTarget": "siwes:serve"
+                    },
+                    "configurations": {
+                        "production": {
+                            "devServerTarget": "siwes:serve:production"
+                        }
+                    }
+                },
+                "lint": {
+                    "builder": "@angular-devkit/build-angular:tslint",
+                    "options": {
+                        "tsConfig": "e2e/tsconfig.e2e.json",
+                        "exclude": [
+                            "**/node_modules/**"
+                        ]
+                    }
+                }
+            }
+        }
+    },
+    "defaultProject": "siwes"
+}

@@ -1,0 +1,143 @@
+<div class="preloader">
+    <div class="loader">
+        <div class="loader__figure"></div>
+        <p class="loader__label">SMS....</p>
+    </div>
+</div>
+<!-- ============================================================== -->
+<!-- Main wrapper - style you can find in pages.scss -->
+<!-- ============================================================== -->
+<div id="main-wrapper">
+    <!-- ============================================================== -->
+    <!-- Topbar header - style you can find in pages.scss -->
+    <!-- ============================================================== -->
+    <app-topbar></app-topbar>
+    <!-- ============================================================== -->
+    <!-- End Topbar header -->
+    <!-- ============================================================== -->
+    <!-- ============================================================== -->
+    <!-- Left Sidebar - style you can find in sidebar.scss  -->
+    <!-- ============================================================== -->
+    <app-aside></app-aside>
+    <!-- ============================================================== -->
+    <!-- End Left Sidebar - style you can find in sidebar.scss  -->
+    <!-- ============================================================== -->
+    <!-- ============================================================== -->
+    <!-- Page wrapper  -->
+    <!-- ============================================================== -->
+    <div class="page-wrapper">
+        <!-- ============================================================== -->
+        <!-- Container fluid  -->
+        <!-- ============================================================== -->
+        <div class="container-fluid">
+            <!-- ============================================================== -->
+            <!-- Bread crumb and right sidebar toggle -->
+            <!-- ============================================================== -->
+            <div class="row page-titles">
+                <div class="col-md-5 align-self-center">
+                    <h3 class="text-themecolor"><i class="mdi mdi-settings"></i> Settings</h3>
+                </div>
+            </div>
+            <!-- ============================================================== -->
+            <!-- End Bread crumb and right sidebar toggle -->
+            <!-- ============================================================== -->
+            <!-- ============================================================== -->
+            <!-- Start Page Content -->
+            <!-- ============================================================== -->
+            <div class="row">
+                <div class="col-4">
+                    <div class="card">
+                        <div class="card-header">
+                            <h4 class="card-title"><span class="lstick"></span>Current Settings
+                            </h4>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table vm no-th-brd no-wrap pro-of-month">
+                                    <tbody>
+                                        <tr>
+                                            <td>Academic Session:</td>
+                                            <td>{{defaultSession}}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-4">
+                    <div class="card">
+                        <div class="card-header">
+                            <h4 class="card-title"><span class="lstick"></span>Academic Sessions
+                            </h4>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table vm no-th-brd no-wrap pro-of-month">
+                                    <thead>
+                                        <tr>
+                                            <th>Session</th>
+                                            <th>&nbsp;</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr *ngIf="!sList || sList.length<1">
+                                            <td colspan="2">No Sessions</td>
+                                        </tr>
+                                        <tr *ngFor="let item of sList; let i=index">
+                                            <td>{{item.sessions}}</td>
+                                            <td>
+                                                <button (click)="setDefault(item.id)" class="btn btn-xs btn-primary"> <i class="mdi mdi-wrench"></i>Set Default</button>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-4">
+                    <div class="card">
+                        <div class="card-header">
+                            <h4 class="card-title"><span class="lstick"></span>Add Academic Session
+                            </h4>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <form class="form-horizontal" [formGroup]="sForm" (ngSubmit)="addSession()">
+                                    <div class="form-group md-form was-validated">
+                                        <input formControlName="sessions" class="form-control" required pattern="^([0-9]{4})+\/([0-9]{4})$">
+                                        <div class="ml-0 text-danger" *ngIf="isSubmitted && formControls.sessions.errors && formControls.sessions.errors.required">Session is required</div>
+                                        <div class="ml-0 text-danger" *ngIf="isSubmitted && formControls.sessions.errors && formControls.sessions.errors.pattern">Session is invalid</div>
+                                    </div>
+                                    <div class="form-group">
+                                        <button class="btn btn-sm btn-dark"><i class="mdi mdi-plus"></i> Add</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- ============================================================== -->
+            <!-- End PAge Content -->
+            <!-- ============================================================== -->
+            <app-modal></app-modal>
+        </div>
+        <!-- ============================================================== -->
+        <!-- End Container fluid  -->
+        <!-- ============================================================== -->
+        <!-- ============================================================== -->
+        <!-- footer -->
+        <!-- ============================================================== -->
+        <app-footer></app-footer>
+        <!-- ============================================================== -->
+        <!-- End footer -->
+        <!-- ============================================================== -->
+    </div>
+    <!-- ============================================================== -->
+    <!-- End Page wrapper  -->
+    <!-- ============================================================== -->
+</div>
+<!-- ============================================================== -->
+<!-- End Wrapper -->

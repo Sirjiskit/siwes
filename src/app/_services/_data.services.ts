@@ -1,0 +1,51 @@
+import { Injectable } from '@angular/core';
+
+@Injectable({
+    providedIn:'root'
+})
+export class DataService {
+    
+    constructor() { }
+    lga(state:any):any{
+        let arr = new Array();
+        arr["Abia"] = new Array("Aba North" , "Aba South" , "Arochukwu" , "Bende" , "Ikwuano" , "Isiala-Ngwa North" , "Isiala-Ngwa South" , "Isuikwato" , "Obi Nwa" , "Ohafia" , "Osisioma" , "Ngwa" , "Ugwunagbo" , "Ukwa East" , "Ukwa West" , "Umuahia North" , "Umuahia South" , "Umu-Neochi" );
+        arr["Adamawa"] = new Array("Demsa","Fufore","Ganaye","Gireri","Gombi","Guyuk","Hong","Jada","Lamurde","Madagali","Maiha","Mayo-Belwa","Michika","Mubi North","Mubi South","Numan","Shelleng","Song ");
+        arr["Akwa Ibom"] = new Array("Abak", "Eket", "Ekpe", "Atai", "Essien Udim", "Etinan", "Etim Ekpo", "Ikono","Ikot Abasi", "Ini", "Itu", "Mbo", "Mkpat Enin", "Nsit. Ibom", "Nsit Ubium", "Okobo", "Onna", "Oron", "Oruk Anam", "Ukanafun", "Uquo Ibeno", "Uruan", "Urue Offong/Oruko", "Uyo", "Obot Akara", "Ibesikpo Asutan", "Ibiono Ibom", "Eastern Obolo", "Udung Uko", "Ika", "Ibeno.");
+        arr["Anambra"] = new Array("Anaocha", "Njikoka", "Nnewi North", "Nnewi South", "Onitsha North", "Onitsha South", "Anambra", "Oyi", "Ihiala", "Akwa North", "Awka South and Aguata","Orumba North", "Orumba South", "Ogbaru", "Idemili", "Idemili South", "Ayamelum", "Ekwusigo", "Anambra West", "Dunukofia");
+        arr["Bauchi"] = new Array("Aikaleri" , "Bauchi" , "Bogoro" , "Dambam" , "Darazo" , "Dass Gamawa" , "Ganjuwa" , "Giade" , "Itas/Gadau" , "Jama'are" , "Katagum" , "Krifi" , "Miau" , "Ningi" , "Shira" , "TafawaBelewa" , "Toro" , "Warji" , "Zaki");
+        arr["Bayelsa"] = new Array("Yenagoa", "Sagbama", "Ekeremor", "Southern Ijaw", "Ogbia", "Brass", "Nembe", "Kolokuma/Opokuma", "Kembe");
+        arr["Benue"] = new Array("Ado", "Agatu", "Apaa", "Buruku", "Gboko", "Guma", "Gwer East", "Gwer West", "Katsina-Ala", "Konisshisha-Tse", "Kwande", "Logo", "Obi", "Ogbadibo", "Ohimini", "Oju", "Okpokwu", "Tarka", "Otukpo", "Ukum", "Markudi", "Varideikya");
+        arr["Borno"] = new Array("Shani", "Kwanga-Kusar", "Hawul", "Biu", "Askira/Uba", "Dumboa", "Gwoza", "Konduga", "Bama", "Kaga", "Magumeri", "Gubio", "Mobbar", "Kukawa", "Nganzai", "Monguno", "Marte", "Ngala", "Dikwa", "Mafa", "Maiduguri", "Jere", "Abadan", "Chibok", "Guzamala", "Kale/ Balge","Bayo");
+        arr["Cross River"] = new Array("Akpabuyo", "Odukpani", "Akamkpa", "Biase", "Abi", "Ikom", "Yarkur", "Odubra", "Boki", "Ogoja", "Yala", "Obanliku", "Obudu", "Calabar South", "Etung", "Bekwara", "Bakassi", "Calabar Municipality");
+        arr["Delta"] = new Array("Oshimili", "Aniocha", "Aniocha South", "Ika South", "Ika North-East", "Ndokwa West", "Ndokwa East", "Isoko south", "Isoko North", "Bomadi", "Burutu", "Ughelli South", "Ughelli North", "Ethiope West", "Ethiope East", "Sapele", "Okpe", "Warri North", "Warri South", "Uvwie"," Udu", "Warri Central", "Ukwani", "Oshimili North","Patani");
+        arr["Ebonyi"] = new Array("Afkpo South", "Afikpo North", "Onicha", "Ohaozara", "Abakaliki", "Ishielu", "lkwo", "Ezza", "Ezza South", "Ohaukwu", "Ebonyi", "Ivo");
+        arr["Edo"] = new Array("Esan North-East", "Esan Central", "Esan West", "Egor", "Ukpoba-Central", "Etsako Central", "Igueben", "Oredo", "Ovia SouthWest", "ovia South-East", "Orhionwon", "Uhunmwonde", "Etsako East", "Esan South-East");
+        arr["Ekiti"] = new Array("Ado", "Ekiti-East", "Ekiti-West", "Emure/Ise/Orun", "Ekiti South-West", "Ikare", "Irepodun", "Ijero", "Ido/Osi", "Oye", "Ikole", "Mob A", "Gbonyin", "Efon", "Ise/Orun"," Ilejemeje");
+        arr["Enugu"] = new Array("Enugu South", "Igbo-Eze South", "Enugu North", "Nkanu", "Udi Agwu", "Oji-River", "Ezeagu", "IgboEze North", "Isi-Uzo", "Nsukka", "Igbo-Ekiti", "Uzo-Uwani", "Enugu East", "Aninri", "Nkanu East", "Udenu");
+        arr["Gombe"] = new Array("Akko", "Balanga", "Billiri", "Dukku", "Kaltungo", "Kwami", "Shomgom", "Funakaye", "Gombe", "Nafada/Bajoga","Yamaltu/Delta");
+        arr["Imo"] = new Array("Aboh-Mbaise", "Ahiazu-Mbaise", "Ezinihite", "Ideato South", "Ihitte/Uboma", "ikeduru", "Mbaitoli", "Obowo", "Nkwerre", "Orsu", "Orlu", "Oguta", "Ngor Okpala", "Ohaji Egbema", "Okigwe", "Isiala-Mbano", "Owerri", "Oru","Owerri West","Owerri North", "Oru West", "Isu", "Onuimo", "Nwangele", "Njaba", "Ehime-Mbano","Ideato North");
+        arr["Jigawa"] = new Array("Dutse", "Birnin-Kudu Gwaran", "Kiyawa", "Kirikasamma", "MalamMadori", "Jahun", "Kafin Hausa", "Kazaure", "Roni", "Ringim", "Garkin", "Babura", "Kaugama", "Sule Tankarkar", "Taura", "Gwiwa", "Bosuwa", "Anyo", "Yankwasin", "Buji", "Miga","Guri");
+        arr["Kaduna"] = new Array("Tundun Wada/Makera", "Doka. Kawo", "Kachia", "Jaba", "Zangon-Kataf", "Kaura", "Jema a", "Lere", "Ikara", "Makarfi", "Sabongari", "Zaria", "Giwa", "Birnin Gwari", "Igbabi", "Soba", "Chukun", "Kudan", "Gwagwada", "Kuban", "Sanga","Kagarko");
+        arr["Kano"] = new Array("Dala", "Kano", "Kunbotso", "Nassarawa", "Rimin Gado", "Doguwa", "Tudun Wada", "Sumaila", "Wudil", "Takai", "Albasu", "Bebeji", "Rano", "Bunkure", "Karaye", "Kiru", "Kabo", "Kura", "Madiob", "Gwarzo", "Shanono", "Dawakin", "Kudu Isanyawa", "Bichi Dawakin Tofa", "Dambarta", "Minjibir", "Ungogo", "Gezawa", "Gebasawa", "Bagwai", "Gaye", "Tofa", "Waraua", "Fagge", "Gwale", "Taarauni", "Ajingi", "Garko", "Garun Mallam", "Rogo", "Makoda", "Kibliya","Kunchi");
+        arr["Katsina"] = new Array("Katsina", "Zango", "Daura", "Mai Aduwa", "Mashi", "Kaita", "Ingawa", "Kankiya", "Dutsin-Ma", "Matazu", "Safana", "Musawa", "Kankara", "Malumfashi", "Kafur Danja", "Funtua", "Bakori", "Faskari", "Sandamu", "Danume", "Kasuda", "Raure", "Dan-Musa Dutsi", "Chranchi", "Sabuwa", "Jibiwa", "Batsari", "Kurafi", "Batagarawa", "Rimi", "Mani","Bindawa");
+        arr["Kebbi"] = new Array("Birnin Kebbi", "Agaski", "Yauri", "Sukaba", "Wasugu", "Danko", "Zuru", "Koko-Besse", "Bagudo", "Dandi", "Suru", "Maiyama", "Jega", "Bunza", "Arewa", "Gwandu", "Argungu", "Aliero", "Augie", "Fakai", "Shanga","Kalgo");
+        arr["Kogi"] = new Array("Adavi", "Ajaokuta", "Ijunu", "Bassa", "Dekina", "Idah", "Ankpa", "East Yagba","Kogi","Ofu", "Okehi", "Okene","Olamaboro", "Oyi and West Yagba", "Olale Igalometa", "Ibaji Ogori/ Magongo", "Kopamuro");
+        arr["Kwara"] = new Array("Asa", "Baruten", "Edo", "Ekiti", "Ifelodun", "florin-East", "Ilorin West", "Kaiama", "Moro Offa and Oyun", "Pategi", "Osin", "Oke-Ero", "Irepodun","florin");
+        arr["Lagos"] = new Array("Shomolu", "Agege", "Alimosho", "Lagos Island", "Lagos Mainland", "Mushin", "Oshodi-Isolo", "Surulere", "Ikorodu", "Eti-Osa", "Ibeju-Lekki", "Epe", "Ojo", "Badagry", "Ikeja", "Kosofe", "Amuwo Odofin", "Ajerotmi/ Ifelodun", "Ifako/Ijaiye"," Apapa");
+        arr["Nasarawa"] = new Array("Wamba", "Kokona", "Keana", "Nassarawa/Eggon", "Toto", "Awe", "Akwanga", "Keff", "Karu", "Lafia", "Obi", "Doma","Nassarawa");
+        arr["Niger"] = new Array("Chanchage", "Lapai", "Agaje", "Paikoro", "Suleja", "Gurara", "Bida", "Shiroro", "Rafi", "Wushishi", "Gbako", "Bosso", "Lawan", "Mokwa", "Borgu", "Agwara", "Kotangora", "Magawa", "Rijna", "Katcha", "Miraga", "Edati", "Mashegu", "Muya","Tawa");
+        arr["Ogun"] = new Array("Abeokuta North", "Abeokuta South", "Ogun Water Side", "Ije Ode", "Ijebu North", "Ijebu East", "Odogbolu", "Ikenne", "Sagamu", "Obafemi Owode", "Odeda", "Iffo", "Ado-Odo/Ota", "Egbado North", "Egbado South", "Ilugun Alaro", "Imeko-Afon", "Idarapo Ipokia","Ewekoro");
+        arr["Ondo"] = new Array("Ondo", "Odigbo", "Okitipupa", "Ilaje", "Irele", "Akure", "Idanre", "Ile-Oluji/ Oke-Igbo", "Ose", "Akoko North-West", "Ifedore", "Owo", "Akure North", "Ilaje West", "Ondo East","Akoko South East");
+        arr["Osun"] = new Array("Ayedade", "Aiyedere", "Atakunmosa", "Atakunmosa East", "Boripe", "Boluwaduro", "Ede", "Ede North", "Egbedore", "Ejigbo", "Ifedayo", "Ife East", "Ife Central", "Ife North", "Ife South", "Ifelodun", "Ila", "Ilesha East", "Ilesha west", "Irepodun", "Irewole", "Isokan", "Iwo", "Obokun", "Odo-Otin", "ula-Oluwa", "Olorunda", "Oriade", "Orolu","Oshogbo");
+        arr["Oyo"] = new Array("Afijio", "Akinyele", "Egbeda", "Ibadan Central", "Ibadan NorthEast", "Ibadan South-West", "Ibadan South-East", "Ibarapa", "Ido", "Ifedapo", "Ifeloju", "Irpo", "Iseyin", "Kajola", "Lagelu", "Ogbomosho North", "Ogbomosho South", "Oyo West", "Atiba", "Atigbo", "Saki East", "Itesiwaju", "Iwajowa", "Ibarapa North", "Iyamapo/Olorunsogo", "Oluyole", "Ogo-Oluwa", "Surulere", "Orelope", "Orire", "Oyo", "Ona-Ara");
+        arr["Plateau"] = new Array("Jos North", "Bassa", "Jos South", "Barakin/ladi", "Bokkos", "Mangu", "Pankshin", "Kanam", "Langtang North", "Wase", "Langtang South", "Quaan Pan", "Jos East", "Riyom", "Mikang","kanke");
+        arr["Rivers"] = new Array("Ogba/Egbema", "Ndoni", "Ahoada", "Ikwerre", "Etche", "Andoni/Opobo", "Bonny", "Okrika", "Iyigbo", "Ehana", "Gokana Tai/Eleme", "Obio/Akpor", "Emohua", "Degema", "Aseri Toru", "Akuku", "Abua/Odial", "Omumma", "Opobo/Nkoro", "Ogu/ Bolo", "Ahaoda West","Eleme");
+        arr["Sokoto"] = new Array("Tangaza", "Binji", "Illela", "Gada", "Sabon Birni", "Gwada Bawa", "Kware", "Goronyo", "Wurno", "Rabah", "Wamakko", "silame", "Yabo", "Bodinga", "Tambulwal", "Dange/Shunte", "Gudu", "Kebbe", "Sokoto", "Sokoto South", "Shagari","Tureta");
+        arr["Taraba"] = new Array("Jalingo", "Sardauna", "Takum", "Wukari", "Gashaka", "Bali", "Zing", "Yorro", "Karim Lamido", "Ibi", "Lau", "Ussa", "Ardo-kola", "Gassol","Kurmi");
+        arr["Yobe"] = new Array("Guiba", "Fika", "Nangere", "fune", "Giedam", "Yuriubari", "Yusufari", "Jakusko", "Gogharam", "Borbari", "Nguru", "Machina", "Damaturu", "Potiskum", "Tarmuwa", "Karaguwa","Gularu");
+        arr["Zamfara"] = new Array("Isa", "Zurmi", "Maradun", "Talata-Marafa", "Kaura-Namoda", "Bungudu", "Gussau", "Chafe", "maru", "Anka", "Kiyawa", "Bukuyum", "Gummu","Shinkafi");
+        arr["FCT"] = new Array("Gwagwalada", "Kuje", "Abaji", "Abuja Municipal", "Bwari","Kwali");
+        return arr[state];
+    }
+}
+export const Config = {"base":'http://localhost/siwes/'};
